@@ -3,13 +3,14 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const CreateAlgo = () => {
+const CreateAction = () => {
   const [users, setUsers] = useState([]);
+  const [client, setClient] = useState([]);
   const [username, setUsername] = useState("");
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState(0);
-  const [date, setDate] = useState(new Date());
+  const [status, setStatus] = useState("Not Started");
+  const [startdate, setStartDate] = useState(new Date());
+  const [enddate, setEndDate] = useState(new Date());
 
   useEffect(() => {
     axios
@@ -29,37 +30,42 @@ const CreateAlgo = () => {
     setUsername(e.target.value);
   };
 
+  const onChangeClient = (e) => {
+    setClient(e.target.value);
+  };
+
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
 
-  const onChangeDescription = (e) => {
-    setDescription(e.target.value);
+  const onChangeStatus = (e) => {
+    setStatus(e.target.value);
   };
 
-  const onChangeDuration = (e) => {
-    setDuration(e.target.value);
+  const onChangeStartDate = (date) => {
+    setStartDate(date);
   };
 
-  const onChangeDate = (date) => {
-    setDate(date);
+  const onChangeEndDate = (date) => {
+    setEndDate(date);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const algo = {
+    const action = {
       username,
+      client,
       title,
-      description,
-      duration,
-      date,
+      status,
+      startdate,
+      enddate,
     };
 
-    console.log(algo);
+    console.log(action);
 
     axios
-      .post("http://localhost:5000/algos/add", algo)
+      .post("http://localhost:5000/actions/add", action)
       .then((res) => console.log(res.data));
 
     window.location = "/";
@@ -67,12 +73,11 @@ const CreateAlgo = () => {
 
   return (
     <div>
-      <h3>Create New Exercise Log</h3>
+      <h3>Create New Action</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>Username: </label>
           <select
-            // ref="userInput"
             required
             className="form-control"
             value={username}
@@ -87,8 +92,20 @@ const CreateAlgo = () => {
             })}
           </select>
         </div>
+        <br />
         <div className="form-group">
-          <label>Title: </label>
+          <label>Client: </label>
+          <input
+            type="text"
+            required
+            className="form-control"
+            value={client}
+            onChange={onChangeClient}
+          />
+        </div>
+        <br />
+        <div className="form-group">
+          <label>Action </label>
           <input
             type="text"
             required
@@ -97,42 +114,55 @@ const CreateAlgo = () => {
             onChange={onChangeTitle}
           />
         </div>
+        <br />
         <div className="form-group">
-          <label>Description: </label>
-          <input
-            type="text"
+          <label>Status: </label>
+          <select
             required
             className="form-control"
-            value={description}
-            onChange={onChangeDescription}
-          />
+            value={status}
+            onChange={onChangeStatus}
+          >
+            <option>Not Started</option>
+            <option>In Progress</option>
+            <option>Complete</option>
+            <option>Superseded</option>
+          </select>
         </div>
+        <br />
         <div className="form-group">
-          <label>Duration (in minutes): </label>
-          <input
-            type="text"
-            className="form-control"
-            value={duration}
-            onChange={onChangeDuration}
-          />
-        </div>
-        <div className="form-group">
-          <label>Date: </label>
+          <label>Start Date: </label>
           <div>
-            <DatePicker selected={date} onChange={onChangeDate} />
+            <DatePicker
+              selected={startdate}
+              onChange={onChangeStartDate}
+              dateFormat="yyyy/MM/dd"
+            />
           </div>
         </div>
-
+        <br />
+        <div className="form-group">
+          <label>End Date: </label>
+          <div>
+            <DatePicker
+              selected={enddate}
+              onChange={onChangeEndDate}
+              dateFormat="yyyy/MM/dd"
+            />
+          </div>
+        </div>
+        <br />
         <div className="form-group">
           <input
             type="submit"
-            value="Create Exercise Log"
+            value="Create Action"
             className="btn btn-primary"
           />
         </div>
+        <br />
       </form>
     </div>
   );
 };
 
-export default CreateAlgo;
+export default CreateAction;

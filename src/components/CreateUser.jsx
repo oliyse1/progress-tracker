@@ -22,6 +22,7 @@ const CreateUser = () => {
       .then((res) => console.log(res.data));
 
     setUsername("");
+    window.location = "/";
   };
 
   return (
@@ -38,6 +39,7 @@ const CreateUser = () => {
             onChange={onChangeUsername}
           />
         </div>
+        <br />
         <div className="form-group">
           <input
             type="submit"
