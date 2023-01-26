@@ -17,7 +17,7 @@ const EditAction = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/actions/" + id)
+      .get("https://progress-tracker-api.onrender.com/actions/" + id)
       .then((response) => {
         setUsername(response.data.username);
         setClient(response.data.client);
@@ -31,7 +31,7 @@ const EditAction = () => {
       });
 
     axios
-      .get("http://localhost:5000/users/")
+      .get("https://progress-tracker-api.onrender.com/users/")
       .then((response) => {
         if (response.data.length > 0) {
           setUsers(response.data.map((user) => user.username));
@@ -81,7 +81,10 @@ const EditAction = () => {
     console.log(action);
 
     axios
-      .post("http://localhost:5000/actions/update/" + id, action)
+      .post(
+        "https://progress-tracker-api.onrender.com/actions/update/" + id,
+        action
+      )
       .then((res) => console.log(res.data));
 
     window.location = "/";

@@ -14,7 +14,7 @@ const CreateAction = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/users/")
+      .get("https://progress-tracker-api.onrender.com/users/")
       .then((response) => {
         if (response.data.length > 0) {
           setUsers(response.data.map((user) => user.username));
@@ -65,7 +65,7 @@ const CreateAction = () => {
     console.log(action);
 
     axios
-      .post("http://localhost:5000/actions/add", action)
+      .post("https://progress-tracker-api.onrender.com/actions/add", action)
       .then((res) => console.log(res.data));
 
     window.location = "/";

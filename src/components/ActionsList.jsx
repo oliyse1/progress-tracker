@@ -29,7 +29,7 @@ const ActionsList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/actions/")
+      .get("https://progress-tracker-api.onrender.com/actions/")
       .then((response) => {
         setActions(response.data);
       })
@@ -39,9 +39,11 @@ const ActionsList = () => {
   }, []);
 
   const deleteAction = (id) => {
-    axios.delete("http://localhost:5000/actions/" + id).then((response) => {
-      console.log(response.data);
-    });
+    axios
+      .delete("https://progress-tracker-api.onrender.com/actions/" + id)
+      .then((response) => {
+        console.log(response.data);
+      });
 
     setActions(actions.filter((action) => action._id !== id));
   };
